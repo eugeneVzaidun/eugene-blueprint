@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: virtual-service
+  namespace: example
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - gateway
+  http:
+    - name: "mock"
+      match:
+        - uri:
+            prefix: "/api/mock"
+      headers:
+        request:
+          set:
+            host: mock.mock.svc.cluster.local
+      route:
+        - destination:
+            host: mock.mock.svc.cluster.local

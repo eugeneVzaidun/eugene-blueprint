@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: app
+  name: app
+  namespace: example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+        - image: europe-west4-docker.pkg.dev/shpl-nxt/shpl-nxt/image # kpt-set: europe-west4-docker.pkg.dev/shpl-nxt/shpl-nxt/${image}
+          name: app

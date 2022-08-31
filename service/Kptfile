@@ -1,0 +1,19 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: service
+  annotations:
+    config.kubernetes.io/local-config: "true"
+info:
+  description: Microservice package
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml
+    - image: gcr.io/kpt-fn/set-namespace:v0.4.1
+      configPath: package-context.yaml
+  validators:
+    - image: gcr.io/kpt-fn/kubeval:v0.3.0
+      configMap:
+        strict: "true"
+        ignore_missing_schemas: "true"
